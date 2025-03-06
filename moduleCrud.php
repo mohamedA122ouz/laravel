@@ -1,7 +1,7 @@
 <?php
 class HttpHander
 {
-    private static $connection;
+    public static $connection;
     function __construct()
     {
         header("content-type:application/json");
