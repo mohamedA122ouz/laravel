@@ -1,7 +1,7 @@
 <?php
 class HttpHander
 {
-    public static $connection;
+    private static $connection;
     function __construct()
     {
         header("content-type:application/json");
@@ -22,11 +22,7 @@ class HttpHander
                 http_response_code(500);
                 echo json_encode(["Message" => $ex->getMessage()]);
             }
-        } 
-        // else {
-        //     http_response_code(400);
-        //     echo json_encode(["Message" => "unavailable Method"]);
-        // }
+        }
     }
     public function onGet($innerFunction): void
     {
