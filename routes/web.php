@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\products;
 use Illuminate\Support\Facades\Route;
+
 $products = [
     [
         "src" => "https://fhafnb.com/wp-content/uploads/2024/01/gourmet-coffee.jpg",
@@ -33,15 +35,28 @@ $products = [
         "more_details" => "Orange juice is a refreshing and nutritious beverage made from freshly squeezed oranges. It is packed with vitamin C, an essential nutrient that supports the immune system, improves skin health, and aids in iron absorption. Orange juice also contains potassium, folate, and antioxidants that help maintain heart health and reduce the risk of chronic diseases. Many people enjoy it as a morning drink to kickstart their day with a boost of energy. While fresh-squeezed juice is the healthiest option, commercially available orange juice is often fortified with additional vitamins and minerals. Some varieties include pulp for extra fiber, while others are smooth and easy to drink. Whether enjoyed alone or mixed into smoothies, orange juice remains a favorite beverage for its delicious taste and numerous health benefits."
     ]
 ];
+Route::post("/product/create", function () {
+    //"src","details","name","more_details","price","discount_percentage"
+    request()->validate([
+        "name" => ["required", "min:4"],
+    ]);
+});
 
-
-Route::get('/', function () use($products) {
-    return view('index',["products"=>$products]);
+Route::get('/product/create', function () use ($products) {
+    return view('input');
     // return $products;
 });
-Route::get("/product/{id}", function ($id) use($products){
-    return view("product",["product"=>$products[$id]]);
+Route::get('/', function () use ($products) {
+    return view('index', ["products" => products::all()]);
+    // return $products;
 });
-Route::get("/aboutme", function (){
+
+Route::get("/product/{id}", function ($id) use ($products) {
+    return view("product", ["product" => products::find($id + 1)]);
+});
+Route::get("/aboutme", function () {
     return view("aboutme");
+});
+Route::get("/myorders", function () {
+    return view("myorders");
 });

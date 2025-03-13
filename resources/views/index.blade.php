@@ -5,6 +5,12 @@
             grid-template-columns: auto auto auto;
             row-gap: 10px;
         }
+
+        @media(max-width:700) {
+            .gridBox {
+                grid-template-columns: auto;
+            }
+        }
     </style>
     <h1>Our Products</h1>
     <div class="gridBox">
@@ -15,6 +21,8 @@
                 'href' => '/product/' . $key,
                 'alt' => $product['details'],
                 'src' => $product['src'],
+                'price' => $product['price'],
+                'discount' => $product['discount_percentage'],
             ])
             @endcomponent
         @endforeach
