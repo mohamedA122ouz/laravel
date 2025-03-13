@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
-    /** @use HasFactory<\Database\Factories\BrandFactory> */
     use HasFactory;
-    public string $name;
-    public int $id;
-    public function products(){
-        return $this->hasMany(products::class);
+
+    protected $fillable = ['name']; // Ensure the 'name' field is fillable
+
+    public function products()
+    {
+        return $this->hasMany(Products::class);
     }
 }

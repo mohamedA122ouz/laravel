@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\products;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,7 @@ Route::get("/product/{id}", function ($id) use ($products) {
 Route::get("/aboutme", function () {
     return view("aboutme");
 });
-Route::get("/myorders", function () {
-    return view("myorders");
+Route::get("/allorders", function () {
+    $orders = Order::with(['user', 'product'])->get();
+    return view("allorders", ["orders" => $orders]);
 });
