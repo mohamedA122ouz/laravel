@@ -59,6 +59,6 @@ Route::get("/aboutme", function () {
     return view("aboutme");
 });
 Route::get("/allorders", function () {
-    $orders = Order::with(['user', 'product'])->get();
+    $orders = Order::with(['user', 'product'])->paginate(1);
     return view("allorders", ["orders" => $orders]);
 });
