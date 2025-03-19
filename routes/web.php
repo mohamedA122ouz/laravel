@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Brand;
 use App\Models\Order;
 use App\Models\products;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 
 $products = [
@@ -37,14 +39,47 @@ $products = [
     ]
 ];
 Route::post("/product/create", function () {
+    // echo request();
     //"src","details","name","more_details","price","discount_percentage"
     request()->validate([
         "name" => ["required", "min:4"],
+        "shortDescription" => ['required'],
+        "longDescription" => ['required'],
+        "dicount" => ['required', "between:0,100", "decimal:0,2"],
+        "price" => ['required', "decimal:0,2"],
+        "src" => ["required", "image"]
     ]);
+    if (request()->hasFile('src')) {
+        $image = request()->file('src');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $imagePath = 'storage/images/' . $imageName;
+        $image->move(public_path('storage/images'), $imageName);
+    }
+    $discount = (request("dicount")/100);
+    products::create(
+        [
+            "brand_id"=>request("brand_id"),
+            "name" => request("name"),
+            "details" => request("shortDescription"),
+            "more_details" => request("longDescription"),
+            "discount_percentage" => $discount,
+            "price" => request("price"),
+            "src" => $imagePath ?? "Not exist"
+        ]
+    );
+    return redirect()->back()->with('success', 'Product created successfully!');
+    // return request("dicount")/100;
 });
 
 Route::get('/product/create', function () use ($products) {
-    return view('input');
+    $brands = Brand::all();
+    return view('input',["brands"=>$brands]);
+    // return $products;
+});
+Route::get('/product/edit/{id}', function (int $id) use ($products) {
+    $product = products::find($id);
+    $brands = Brand::all();
+    return view('input',["brands"=>$brands,"product"=>$product]);
     // return $products;
 });
 Route::get('/', function () use ($products) {

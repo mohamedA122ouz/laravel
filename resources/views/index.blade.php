@@ -15,12 +15,18 @@
     <h1>Our Products</h1>
     <div class="gridBox">
         @foreach ($products as $key => $product)
+            @php
+                $src = $product['src'];
+                if (strpos($src, 'storage/image') == 0) {
+                    $src = asset($src);
+                }
+            @endphp
             @component('components.card', [
                 'name' => $product['name'],
                 'details' => $product['details'],
                 'href' => '/product/' . $key,
                 'alt' => $product['details'],
-                'src' => $product['src'],
+                'src' => $src,
                 'price' => $product['price'],
                 'discount' => $product['discount_percentage'],
             ])
