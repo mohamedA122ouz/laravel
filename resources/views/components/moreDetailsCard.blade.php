@@ -8,6 +8,11 @@
     background:black;
 }
 </style>
+@php
+if (strpos($src, 'storage/image') == 0) {
+    $src = asset($src);
+}
+@endphp
 <div class="card mb-3" style="max-width: 100%;">
     <div class="row g-0">
         <div class="col-md-4 more-details-image">

@@ -46,6 +46,9 @@
         method="post" enctype="multipart/form-data">
         {{-- //"","more_details","price","discount_percentage" --}}
         @csrf
+        @if(isset($product))
+            @method("PATCH")
+        @endif
         <div id="inputFields">
             <label for="name">brands</label>
             <select name="brand_id">
@@ -88,6 +91,7 @@
                     if (strpos($src, 'storage/image') == 0) {
                         $src = asset($src);
                     }
+
                 }
             @endphp
             <img src = "{{ $src ?? 'https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ='}}"

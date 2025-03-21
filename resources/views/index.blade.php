@@ -24,7 +24,7 @@
             @component('components.card', [
                 'name' => $product['name'],
                 'details' => $product['details'],
-                'href' => '/product/' . $key,
+                'href' => '/product/' . $product['id'],
                 'alt' => $product['details'],
                 'src' => $src,
                 'price' => $product['price'],

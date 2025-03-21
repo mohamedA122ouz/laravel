@@ -39,7 +39,7 @@
 <body>
     @php
         $index = 'Products';
-        $endPoints = ['All Orders','About Me'];
+        $endPoints = ['All Orders','About Me','Create'];
     @endphp
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
